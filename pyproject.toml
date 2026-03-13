@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "graphsignal-debug"
 version = "0.1.1"
-description = "Graphsignal CLI for debug context and API key management"
+description = "Graphsignal debug client for AI agents"
 authors = ["Graphsignal, Inc. <devops@graphsignal.com>"]
 license = "Apache-2.0"
 readme = "README.md"

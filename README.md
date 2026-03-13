@@ -22,7 +22,7 @@ You will be prompted for your API key.
 
 ### Fetch
 
-Fetch debug context (SIGNALS.md + JSON) for a time range. Requires being logged in.
+Fetch debug context for a time range. Requires being logged in.
 
 ```bash
 graphsignal-debug fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z
