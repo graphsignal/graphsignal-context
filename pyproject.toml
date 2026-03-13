@@ -1,11 +1,14 @@
 [tool.poetry]
 name = "graphsignal-debug"
-version = "0.1.0"
+version = "0.1.1"
 description = "Graphsignal CLI for debug context and API key management"
 authors = ["Graphsignal, Inc. <devops@graphsignal.com>"]
 license = "Apache-2.0"
 readme = "README.md"
-packages = [{ include = "graphsignal_debug", from = "src" }]
+packages = [
+    { include = "graphsignal_debug", from = "src" },
+    { include = "tools" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
@@ -13,8 +16,15 @@ click = "*"
 pyyaml = "*"
 requests = "*"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.poetry.scripts]
 graphsignal-debug = "graphsignal_debug.cli:main"
+test = "tools.run_tests:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

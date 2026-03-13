@@ -1,4 +1,4 @@
-# graphsignal-debug
+# Graphsignal Debug Client
 
 CLI for Graphsignal: login (store API key) and fetch debug context from api.graphsignal.com.
 
