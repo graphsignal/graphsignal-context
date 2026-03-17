@@ -40,7 +40,15 @@ The command calls `GET /api/v1/debug_context/` on `https://api.graphsignal.com` 
 
 ## AI agent integration
 
-Install the Graphsignal skill so your AI coding agent can run `graphsignal-debug fetch` for a time range and use the returned context (profiles, errors, traces) to help you debug:
+Install the Graphsignal skill so your AI coding agent can run `graphsignal-debug fetch` for a time range and use the returned context (profiles, errors, traces) to help you debug.
+
+**Claude Code** — Clone the repo into Claude's personal skills directory:
+
+```bash
+git clone https://github.com/graphsignal/graphsignal-debug ~/.claude/skills/graphsignal-debug
+```
+
+**Other agents (Cursor, Codex, Gemini)** — Use the [skills.sh](https://skills.sh) registry:
 
 ```bash
 npx skills add graphsignal/graphsignal-debug
@@ -59,8 +67,8 @@ Install the CLI first: `pip install graphsignal-debug`, then `graphsignal-debug 
 
 Once the skill is installed, you can ask the agent to:
 
-- **Find the root cause of a latency spike** — e.g. “Fetch Graphsignal data for the last 2 hours and find the root cause of the latency spike” or “What’s causing the slowdown? Use Graphsignal debug context from 10am to noon today.”
-- **Explain errors or failures** — e.g. “Get debug context for the last 24 hours and summarize any errors or failures” or “Why did inference fail around 3pm? Pull Graphsignal data for that window.”
-- **Inspect profiles and bottlenecks** — e.g. “Fetch Graphsignal context for yesterday and identify the main performance bottlenecks” or “Which operations are taking the most time? Use Graphsignal data from the last 6 hours.”
+- **Find the root cause of a latency spike** — e.g. "Fetch Graphsignal data for the last 2 hours and find the root cause of the latency spike" or "What's causing the slowdown? Use Graphsignal debug context from 10am to noon today."
+- **Explain errors or failures** — e.g. "Get debug context for the last 24 hours and summarize any errors or failures" or "Why did inference fail around 3pm? Pull Graphsignal data for that window."
+- **Inspect profiles and bottlenecks** — e.g. "Fetch Graphsignal context for yesterday and identify the main performance bottlenecks" or "Which operations are taking the most time? Use Graphsignal data from the last 6 hours."
 
 The agent will call `graphsignal-debug fetch --start <ISO> --end <ISO>` (and optional `--tags` when you specify deployment or service tags), then analyze the returned context to answer your question.

@@ -60,4 +60,4 @@ graphsignal-debug fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z 
 
 1. If the user needs debug context for a time range, run `graphsignal-debug fetch` with the appropriate `--start` and `--end` (ISO 8601 UTC).
 2. If the command fails with "Not logged in", tell the user to run `graphsignal-debug login` or set `GRAPHSIGNAL_API_KEY`.
-3. Use the printed output (SIGNALS.md + JSON) to answer questions about profiles, errors, traces, or metrics in that window.
+3. Use the printed output — markdown for signal descriptions and metadata, JSON for signals — to answer questions about profiles, errors, traces, or metrics in that window.

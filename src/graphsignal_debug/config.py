@@ -42,7 +42,7 @@ def save_config(config: dict) -> None:
 def get_api_key() -> Optional[str]:
     """Return stored API key or None if not logged in."""
     config = load_config()
-    return config.get("api_key") or os.environ.get("GRAPHSIGNAL_API_KEY")
+    return os.environ.get("GRAPHSIGNAL_API_KEY") or config.get("api_key")
 
 
 def set_api_key(api_key: str) -> None:
