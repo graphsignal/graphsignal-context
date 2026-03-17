@@ -7,12 +7,6 @@ description: Fetch Graphsignal debug context for a time range via the graphsigna
 
 Fetch debug context from [Graphsignal](https://graphsignal.com) (api.graphsignal.com) for a given time range. The response is signals description plus JSON (profiles, errors, traces, metrics).
 
-**Install this skill** ([skills.sh](https://skills.sh)):
-
-```bash
-npx skills add graphsignal/graphsignal-debug
-```
-
 ## When to use
 
 - User asks for Graphsignal debug context, debug output, or time-range data.
