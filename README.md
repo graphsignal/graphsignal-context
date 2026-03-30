@@ -8,6 +8,12 @@ CLI for Graphsignal: login (store API key) and fetch debug context from api.grap
 pip install graphsignal-debug
 ```
 
+Or install as an isolated CLI tool with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv tool install graphsignal-debug
+```
+
 ## Usage
 
 ### Login
@@ -54,7 +60,7 @@ git clone https://github.com/graphsignal/graphsignal-debug ~/.claude/skills/grap
 npx skills add graphsignal/graphsignal-debug
 ```
 
-Install the CLI first: `pip install graphsignal-debug`, then `graphsignal-debug login` with your API key.
+Install the CLI first (`pip install graphsignal-debug` or `uv tool install graphsignal-debug`), then run `graphsignal-debug login` with your API key.
 
 ### Supported agents
 

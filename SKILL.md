@@ -55,3 +55,4 @@ graphsignal-debug fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z 
 1. If the user needs debug context for a time range, run `graphsignal-debug fetch` with the appropriate `--start` and `--end` (ISO 8601 UTC).
 2. If the command fails with "Not logged in", tell the user to run `graphsignal-debug login` or set `GRAPHSIGNAL_API_KEY`.
 3. Use the printed output — markdown for signal descriptions and metadata, JSON for signals — to answer questions about profiles, errors, traces, or metrics in that window.
+4. The response includes `available_tags` — all metric tag keys with their most recent values across all time (not just the queried range). Use these to re-fetch context with `--tags` for a specific host, process, GPU device, etc. when you need more targeted debugging (e.g. `--tags "host.name:gpu-server-01"` or `--tags "device.index:0"`).
