@@ -20,7 +20,7 @@ def test_fetch_requires_login():
 
 def test_fetch_success_outputs_context():
     with patch("graphsignal_context.cli.get_api_key", return_value="test-key"):
-        with patch("graphsignal_context.cli.fetch_debug_context", return_value="context output"):
+        with patch("graphsignal_context.cli.fetch_signal_context", return_value="context output"):
             result = runner.invoke(cli, ["fetch", "--start", "2026-03-10T00:00:00Z", "--end", "2026-03-12T00:00:00Z"])
     assert result.exit_code == 0
     assert "context output" in result.output

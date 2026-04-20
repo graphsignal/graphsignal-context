@@ -7,7 +7,7 @@ import click
 import requests
 
 from .config import get_api_key, set_api_key
-from .api import iso_to_ns, fetch_debug_context
+from .api import iso_to_ns, fetch_signal_context
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
 
 @click.group()
 def cli():
-    """Graphsignal debug CLI."""
+    """Graphsignal context CLI."""
     pass
 
 
@@ -60,7 +60,7 @@ def _ensure_logged_in() -> str:
     help="Filter by tags (semicolon-separated key:value pairs)",
 )
 def fetch(start: str, end_: str, tags: Optional[str]):
-    """Fetch debug context for the given time range from api.graphsignal.com."""
+    """Fetch signal context for the given time range from api.graphsignal.com."""
     api_key = _ensure_logged_in()
     try:
         start_ns = iso_to_ns(start)
@@ -72,7 +72,7 @@ def fetch(start: str, end_: str, tags: Optional[str]):
         click.echo("--start must be before --end", err=True)
         sys.exit(1)
     try:
-        context = fetch_debug_context(api_key, start_ns, end_ns, tags=tags)
+        context = fetch_signal_context(api_key, start_ns, end_ns, tags=tags)
     except requests.HTTPError as e:
         msg = e.response.text if e.response is not None else str(e)
         click.echo(f"API error {e.response.status_code if e.response else ''}: {msg}", err=True)

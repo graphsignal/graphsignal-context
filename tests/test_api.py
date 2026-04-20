@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import patch, Mock
 
-from graphsignal_context.api import iso_to_ns, fetch_debug_context
+from graphsignal_context.api import iso_to_ns, fetch_signal_context
 
 
 class TestIsoToNs:
@@ -25,16 +25,16 @@ class TestIsoToNs:
             iso_to_ns("not-a-date")
 
 
-class TestFetchDebugContext:
+class TestFetchSignalContext:
     @patch("graphsignal_context.api.requests.get")
     def test_returns_context_field(self, mocked_get):
         mocked_get.return_value = Mock(
             status_code=200,
-            json=Mock(return_value={"context": "debug context body"}),
+            json=Mock(return_value={"context": "signal context body"}),
             raise_for_status=Mock(),
         )
-        result = fetch_debug_context("key1", 0, 1000)
-        assert result == "debug context body"
+        result = fetch_signal_context("key1", 0, 1000)
+        assert result == "signal context body"
         mocked_get.assert_called_once()
         call_kw = mocked_get.call_args[1]
         assert call_kw["headers"]["X-API-KEY"] == "key1"
@@ -48,7 +48,7 @@ class TestFetchDebugContext:
             json=Mock(return_value={"context": ""}),
             raise_for_status=Mock(),
         )
-        fetch_debug_context("key1", 0, 1000, tags="env:prod")
+        fetch_signal_context("key1", 0, 1000, tags="env:prod")
         call_kw = mocked_get.call_args[1]
         assert call_kw["params"]["tags"] == "env:prod"
 
@@ -59,7 +59,7 @@ class TestFetchDebugContext:
             json=Mock(return_value={}),
             raise_for_status=Mock(),
         )
-        result = fetch_debug_context("key1", 0, 1000)
+        result = fetch_signal_context("key1", 0, 1000)
         assert result == ""
 
     @patch("graphsignal_context.api.requests.get")
@@ -69,4 +69,4 @@ class TestFetchDebugContext:
         resp.raise_for_status.side_effect = requests.HTTPError(response=resp)
         mocked_get.return_value = resp
         with pytest.raises(requests.HTTPError):
-            fetch_debug_context("badkey", 0, 1000)
+            fetch_signal_context("badkey", 0, 1000)

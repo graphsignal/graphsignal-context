@@ -17,7 +17,7 @@ def iso_to_ns(iso_str: str) -> int:
     return int(dt.timestamp() * 1_000_000_000)
 
 
-def fetch_debug_context(
+def fetch_signal_context(
     api_key: str,
     start_time_ns: int,
     end_time_ns: int,
@@ -25,10 +25,10 @@ def fetch_debug_context(
     api_base: str = DEFAULT_API_BASE,
 ) -> str:
     """
-    GET /api/v1/debug_context/ and return the 'context' field from the response.
+    GET /api/v1/signal_context/ and return the 'context' field from the response.
     Raises requests.HTTPError on non-2xx.
     """
-    url = f"{api_base.rstrip('/')}/api/v1/debug_context/"
+    url = f"{api_base.rstrip('/')}/api/v1/signal_context/"
     headers = {"X-API-KEY": api_key}
     params = {
         "start_time_ns": start_time_ns,
