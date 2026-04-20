@@ -1,1 +1,1 @@
-# Tests for graphsignal-debug
+# Tests for graphsignal-context

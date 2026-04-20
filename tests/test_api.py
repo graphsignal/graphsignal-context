@@ -1,9 +1,9 @@
-"""Tests for graphsignal_debug.api."""
+"""Tests for graphsignal_context.api."""
 
 import pytest
 from unittest.mock import patch, Mock
 
-from graphsignal_debug.api import iso_to_ns, fetch_debug_context
+from graphsignal_context.api import iso_to_ns, fetch_debug_context
 
 
 class TestIsoToNs:
@@ -26,7 +26,7 @@ class TestIsoToNs:
 
 
 class TestFetchDebugContext:
-    @patch("graphsignal_debug.api.requests.get")
+    @patch("graphsignal_context.api.requests.get")
     def test_returns_context_field(self, mocked_get):
         mocked_get.return_value = Mock(
             status_code=200,
@@ -41,7 +41,7 @@ class TestFetchDebugContext:
         assert call_kw["params"]["start_time_ns"] == 0
         assert call_kw["params"]["end_time_ns"] == 1000
 
-    @patch("graphsignal_debug.api.requests.get")
+    @patch("graphsignal_context.api.requests.get")
     def test_passes_tags_when_provided(self, mocked_get):
         mocked_get.return_value = Mock(
             status_code=200,
@@ -52,7 +52,7 @@ class TestFetchDebugContext:
         call_kw = mocked_get.call_args[1]
         assert call_kw["params"]["tags"] == "env:prod"
 
-    @patch("graphsignal_debug.api.requests.get")
+    @patch("graphsignal_context.api.requests.get")
     def test_returns_empty_string_when_no_context_key(self, mocked_get):
         mocked_get.return_value = Mock(
             status_code=200,
@@ -62,7 +62,7 @@ class TestFetchDebugContext:
         result = fetch_debug_context("key1", 0, 1000)
         assert result == ""
 
-    @patch("graphsignal_debug.api.requests.get")
+    @patch("graphsignal_context.api.requests.get")
     def test_raises_on_http_error(self, mocked_get):
         import requests
         resp = Mock(status_code=401, text="Unauthorized")

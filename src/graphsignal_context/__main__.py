@@ -1,4 +1,4 @@
-"""Allow running as python -m graphsignal_debug."""
+"""Allow running as python -m graphsignal_context."""
 
 from .cli import main
 

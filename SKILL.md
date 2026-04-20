@@ -1,9 +1,9 @@
 ---
-name: graphsignal-debug
-description: Fetch Graphsignal debug context for a time range via the graphsignal-debug CLI. Use when the user needs debug context, time-range queries for signals/profiles/errors, or CLI access to the debug_context API.
+name: graphsignal-context
+description: Fetch Graphsignal debug context for a time range via the graphsignal-context CLI. Use when the user needs debug context, time-range queries for signals/profiles/errors, or CLI access to the debug_context API.
 ---
 
-# graphsignal-debug fetch
+# graphsignal-context fetch
 
 Fetch debug context from [Graphsignal](https://graphsignal.com) (api.graphsignal.com) for a given time range. The response is signals description plus JSON (profiles, errors, traces, metrics).
 
@@ -17,21 +17,21 @@ Fetch debug context from [Graphsignal](https://graphsignal.com) (api.graphsignal
 
 1. **Install** (from PyPI):
    ```bash
-   pip install graphsignal-debug
+   pip install graphsignal-context
    ```
 
 2. **Login** (once). API key is stored in `~/.graphsignal/config.yml`:
    ```bash
-   graphsignal-debug login
+   graphsignal-context login
    ```
    Alternatively, set `GRAPHSIGNAL_API_KEY` in the environment; the CLI uses it if present.
 
-If not logged in, `fetch` exits with: "Not logged in. Run: graphsignal-debug login".
+If not logged in, `fetch` exits with: "Not logged in. Run: graphsignal-context login".
 
 ## Command
 
 ```bash
-graphsignal-debug fetch --start <ISO8601> --end <ISO8601> [--tags "key:value;..."]
+graphsignal-context fetch --start <ISO8601> --end <ISO8601> [--tags "key:value;..."]
 ```
 
 - **--start** (required): Start of time range, ISO 8601 with Z (UTC). Example: `2026-03-10T00:00:00Z`.
@@ -44,15 +44,15 @@ The CLI calls `GET https://api.graphsignal.com/api/v1/debug_context/` with `star
 
 ```bash
 # Last two days (adjust dates to your window)
-graphsignal-debug fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z
+graphsignal-context fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z
 
 # With tag filter
-graphsignal-debug fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z --tags "env:production"
+graphsignal-context fetch --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z --tags "env:production"
 ```
 
 ## Agent workflow
 
-1. If the user needs debug context for a time range, run `graphsignal-debug fetch` with the appropriate `--start` and `--end` (ISO 8601 UTC).
-2. If the command fails with "Not logged in", tell the user to run `graphsignal-debug login` or set `GRAPHSIGNAL_API_KEY`.
+1. If the user needs debug context for a time range, run `graphsignal-context fetch` with the appropriate `--start` and `--end` (ISO 8601 UTC).
+2. If the command fails with "Not logged in", tell the user to run `graphsignal-context login` or set `GRAPHSIGNAL_API_KEY`.
 3. Use the printed output — markdown for signal descriptions and metadata, JSON for signals — to answer questions about profiles, errors, traces, or metrics in that window.
 4. The response includes `available_tags` — all metric tag keys with their most recent values across all time (not just the queried range). Use these to re-fetch context with `--tags` for a specific host, process, GPU device, etc. when you need more targeted debugging (e.g. `--tags "host.name:gpu-server-01"` or `--tags "device.index:0"`).

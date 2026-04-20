@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "graphsignal-debug"
+name = "graphsignal-context"
 version = "0.1.1"
 description = "Graphsignal debug client for AI agents"
 authors = ["Graphsignal, Inc. <devops@graphsignal.com>"]
 license = "Apache-2.0"
 readme = "README.md"
 packages = [
-    { include = "graphsignal_debug", from = "src" },
+    { include = "graphsignal_context", from = "src" },
     { include = "tools" },
 ]
 
@@ -23,7 +23,7 @@ pytest = "*"
 testpaths = ["tests"]
 
 [tool.poetry.scripts]
-graphsignal-debug = "graphsignal_debug.cli:main"
+graphsignal-context = "graphsignal_context.cli:main"
 test = "tools.run_tests:main"
 
 [build-system]

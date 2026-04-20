@@ -1,4 +1,4 @@
-"""graphsignal-debug: login and fetch."""
+"""graphsignal-context: login and fetch."""
 
 import sys
 from typing import Optional
@@ -35,7 +35,7 @@ def _ensure_logged_in() -> str:
     api_key = get_api_key()
     if not api_key:
         click.echo(
-            "Not logged in. Run: graphsignal-debug login",
+            "Not logged in. Run: graphsignal-context login",
             err=True,
         )
         sys.exit(1)
