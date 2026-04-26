@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import patch, Mock
 
-from graphsignal_context.api import iso_to_ns, fetch_signal_context
+from graphsignal_context.api import iso_to_ns, fetch_signal_context, fetch_signal_guide
 
 
 class TestIsoToNs:
@@ -70,3 +70,27 @@ class TestFetchSignalContext:
         mocked_get.return_value = resp
         with pytest.raises(requests.HTTPError):
             fetch_signal_context("badkey", 0, 1000)
+
+
+class TestFetchSignalGuide:
+    @patch("graphsignal_context.api.requests.get")
+    def test_returns_plain_text(self, mocked_get):
+        mocked_get.return_value = Mock(
+            status_code=200,
+            text="# Signals\n\nSignal docs",
+            raise_for_status=Mock(),
+        )
+        result = fetch_signal_guide("key1")
+        assert result == "# Signals\n\nSignal docs"
+        mocked_get.assert_called_once()
+        call_kw = mocked_get.call_args[1]
+        assert call_kw["headers"]["X-API-KEY"] == "key1"
+
+    @patch("graphsignal_context.api.requests.get")
+    def test_raises_on_http_error(self, mocked_get):
+        import requests
+        resp = Mock(status_code=401, text="Unauthorized")
+        resp.raise_for_status.side_effect = requests.HTTPError(response=resp)
+        mocked_get.return_value = resp
+        with pytest.raises(requests.HTTPError):
+            fetch_signal_guide("badkey")

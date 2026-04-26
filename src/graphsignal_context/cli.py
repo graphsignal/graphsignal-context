@@ -1,4 +1,4 @@
-"""graphsignal-context: login and fetch."""
+"""graphsignal-context: login and query signals."""
 
 import sys
 from typing import Optional
@@ -7,7 +7,7 @@ import click
 import requests
 
 from .config import get_api_key, set_api_key
-from .api import iso_to_ns, fetch_signal_context
+from .api import iso_to_ns, fetch_signal_context, fetch_signal_guide
 
 
 def main():
@@ -43,6 +43,22 @@ def _ensure_logged_in() -> str:
 
 
 @cli.command()
+def guide():
+    """Fetch signal guide from api.graphsignal.com."""
+    api_key = _ensure_logged_in()
+    try:
+        guide_text = fetch_signal_guide(api_key)
+    except requests.HTTPError as e:
+        msg = e.response.text if e.response is not None else str(e)
+        click.echo(f"API error {e.response.status_code if e.response else ''}: {msg}", err=True)
+        sys.exit(1)
+    except Exception as e:
+        click.echo(f"Error: {e}", err=True)
+        sys.exit(1)
+    click.echo(guide_text)
+
+
+@cli.command()
 @click.option(
     "--start",
     required=True,
@@ -59,7 +75,7 @@ def _ensure_logged_in() -> str:
     default=None,
     help="Filter by tags (semicolon-separated key:value pairs)",
 )
-def fetch(start: str, end_: str, tags: Optional[str]):
+def signals(start: str, end_: str, tags: Optional[str]):
     """Fetch signal context for the given time range from api.graphsignal.com."""
     api_key = _ensure_logged_in()
     try:

@@ -25,10 +25,10 @@ def fetch_signal_context(
     api_base: str = DEFAULT_API_BASE,
 ) -> str:
     """
-    GET /api/v1/signal_context/ and return the 'context' field from the response.
+    GET /api/v1/context/signals/ and return the 'context' field from the response.
     Raises requests.HTTPError on non-2xx.
     """
-    url = f"{api_base.rstrip('/')}/api/v1/signal_context/"
+    url = f"{api_base.rstrip('/')}/api/v1/context/signals/"
     headers = {"X-API-KEY": api_key}
     params = {
         "start_time_ns": start_time_ns,
@@ -40,3 +40,18 @@ def fetch_signal_context(
     resp.raise_for_status()
     data = resp.json()
     return data.get("context", "")
+
+
+def fetch_signal_guide(
+    api_key: str,
+    api_base: str = DEFAULT_API_BASE,
+) -> str:
+    """
+    GET /api/v1/context/guide/ and return plain text response body.
+    Raises requests.HTTPError on non-2xx.
+    """
+    url = f"{api_base.rstrip('/')}/api/v1/context/guide/"
+    headers = {"X-API-KEY": api_key}
+    resp = requests.get(url, headers=headers, timeout=(5, 30))
+    resp.raise_for_status()
+    return resp.text
