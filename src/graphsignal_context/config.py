@@ -45,6 +45,12 @@ def get_api_key() -> Optional[str]:
     return os.environ.get("GRAPHSIGNAL_API_KEY") or config.get("api_key")
 
 
+def get_api_base() -> str:
+    """Return Graphsignal API base URL from env/config/default."""
+    config = load_config()
+    return os.environ.get("GRAPHSIGNAL_API_BASE") or config.get("api_base") or DEFAULT_API_BASE
+
+
 def set_api_key(api_key: str) -> None:
     """Store API key in config."""
     config = load_config()

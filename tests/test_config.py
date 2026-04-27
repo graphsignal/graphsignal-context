@@ -51,3 +51,21 @@ def test_set_api_key_persists():
     set_api_key("my-api-key")
     assert load_config().get("api_key") == "my-api-key"
     assert get_api_key() == "my-api-key"
+
+
+def test_get_api_base_defaults():
+    from graphsignal_context.config import get_api_base, DEFAULT_API_BASE
+    assert get_api_base() == DEFAULT_API_BASE
+
+
+def test_get_api_base_from_config():
+    from graphsignal_context.config import get_api_base, save_config
+    save_config({"api_base": "http://localhost:8080"})
+    assert get_api_base() == "http://localhost:8080"
+
+
+def test_get_api_base_from_env_overrides_config(monkeypatch):
+    from graphsignal_context.config import get_api_base, save_config
+    save_config({"api_base": "http://localhost:8080"})
+    monkeypatch.setenv("GRAPHSIGNAL_API_BASE", "http://signal-api:8080")
+    assert get_api_base() == "http://signal-api:8080"

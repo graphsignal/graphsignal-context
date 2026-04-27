@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "graphsignal-context"
-version = "0.1.4"
+version = "0.1.5"
 description = "Graphsignal context client for AI agents"
 authors = ["Graphsignal, Inc. <devops@graphsignal.com>"]
 license = "Apache-2.0"

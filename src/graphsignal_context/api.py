@@ -1,4 +1,4 @@
-"""Client for Graphsignal API (api.graphsignal.com)."""
+"""Client for Graphsignal API."""
 
 from datetime import datetime, timezone
 from typing import Optional

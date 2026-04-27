@@ -1,6 +1,6 @@
 # Graphsignal Context Client
 
-CLI for Graphsignal: login (store API key), query signal context, and fetch signal guide content from api.graphsignal.com. You can also install a skill so your AI coding agent (Cursor, Claude Code, Codex, etc.) can run the CLI and use the returned context to help optimize inference, profiles, or errors.
+CLI for Graphsignal: login (store API key), query signal context, and fetch signal guide content from Graphsignal API. You can also install a skill so your AI coding agent (Cursor, Claude Code, Codex, etc.) can run the CLI and use the returned context to help optimize inference, profiles, or errors.
 
 ## Install
 
@@ -26,6 +26,18 @@ graphsignal-context login
 
 You will be prompted for your API key.
 
+You can also set credentials via environment variable:
+
+```bash
+export GRAPHSIGNAL_API_KEY=<your_api_key>
+```
+
+Optionally override API endpoint (for local/self-hosted testing):
+
+```bash
+export GRAPHSIGNAL_API_BASE=http://signal-api:8080
+```
+
 ### Signals
 
 Query signal context for a time range. Requires being logged in.
@@ -40,7 +52,7 @@ Optional `--tags` filter (semicolon-separated key:value pairs). Tags must match 
 graphsignal-context signals --start 2026-03-10T00:00:00Z --end 2026-03-12T00:00:00Z --tags "env:prod"
 ```
 
-The command calls `GET /api/v1/context/signals/` on `https://api.graphsignal.com` with `start_time_ns`, `end_time_ns`, and optional `tags`, and prints the response context.
+The command calls `GET /api/v1/context/signals/` on `GRAPHSIGNAL_API_BASE` (or `https://api.graphsignal.com` by default) with `start_time_ns`, `end_time_ns`, and optional `tags`, and prints the response context.
 
 ### Guide
 
@@ -50,7 +62,7 @@ Fetch guide content about signals.
 graphsignal-context guide
 ```
 
-The command calls `GET /api/v1/context/guide/` on `https://api.graphsignal.com` and prints the returned text.
+The command calls `GET /api/v1/context/guide/` on `GRAPHSIGNAL_API_BASE` (or `https://api.graphsignal.com` by default) and prints the returned text.
 
 ---
 
